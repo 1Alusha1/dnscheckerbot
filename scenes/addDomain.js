@@ -10,14 +10,14 @@ function isValidDomain(domain) {
 export default function addDomain() {
   const scene = new Scenes.BaseScene("addDomain");
   scene.enter(async (ctx) => {
-    await ctx.reply("Ввнди домен");
+    await ctx.reply("Ввнди домен:");
   });
 
   scene.on("text", async (ctx) => {
     const text = ctx.message.text;
     if (!isValidDomain(text)) {
       await ctx.reply("❌ Не корректный домен");
-      return ctx.scene.leave();
+      return await ctx.scene.enter("startScene");
     }
 
     try {
@@ -27,10 +27,10 @@ export default function addDomain() {
       });
       await domain.save();
       await ctx.reply("✅ Домен успешно добавлен");
-      await ctx.scene.leave();
+      return await ctx.scene.enter("startScene");
     } catch (err) {
       await ctx.reply("❌ Ошибка при добавлении домена");
-      await ctx.scene.leave();
+      return await ctx.scene.enter("startScene");
     }
   });
 
