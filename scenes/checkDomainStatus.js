@@ -1,16 +1,18 @@
-import { Scenes } from "telegraf";
+import { Scenes } from 'telegraf';
 
 export default function checkDomainStatus() {
-  const scene = new Scenes.BaseScene("checkDomainStatus");
+  const scene = new Scenes.BaseScene('checkDomainStatus');
 
   scene.enter(async (ctx) => {
     try {
-      await ctx.reply("Проверка началась:");
+      await ctx.reply('Проверка началась:');
       await fetch(`${process.env.API_URI}/check-own/${ctx.from.id}`);
-      return await ctx.scene.enter("startScene");
+
+      await ctx.reply('Проверка завершилась');
+      return await ctx.scene.leave();
     } catch (err) {
       if (err) console.log(err);
-      await ctx.reply("Ошибка во время проверки статуса доменов");
+      await ctx.reply('Ошибка во время проверки статуса доменов');
     }
   });
 
