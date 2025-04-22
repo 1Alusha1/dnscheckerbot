@@ -7,6 +7,8 @@ export default function checkDomainStatus() {
     try {
       await ctx.reply('Проверка началась:');
       await fetch(`${process.env.API_URI}/check-own/${ctx.from.id}`);
+      console.log(ctx.from.id)
+      await fetch(`${process.env.GOOGLESAFE_API}/goole-safe-own/${ctx.from.id}`);
 
       await ctx.reply('Проверка завершилась');
       return await ctx.scene.leave();
