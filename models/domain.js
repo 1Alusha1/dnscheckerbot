@@ -11,7 +11,7 @@ const DomainSchema = new Schema({
   },
   active: {
     type: Boolean,
-    default: null,
+    default: true,
   },
 });
 
